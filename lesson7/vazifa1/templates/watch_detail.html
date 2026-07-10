@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ watch.title }}</title>
+  </head>
+  <body>
+    <a href="{% url 'watch_list' %}">⬅️ Orqaga</a> |
+    <a href="{% url 'watch_update' watch.id %}">📝 Update</a> |
+    <a href="{% url 'watch_delete' watch.id %}" style="color: red">❌ Delete</a>
+    <hr />
+
+    <h1>{{ watch.title }}</h1>
+    <p><b>Brend:</b> {{ watch.brand }}</p>
+    <p><b>Narxi:</b> {{ watch.price }} $</p>
+    <p><b>Batafsil ma'lumot:</b></p>
+    <p>{{ watch.description }}</p>
+  </body>
+</html>

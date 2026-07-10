@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Soatlar Ro'yxati</title>
+  </head>
+  <body>
+    <h1>⌚️ Premium Soatlar Do'koni</h1>
+    <a href="{% url 'watch_create' %}">➕ Yangi soat qo'shish</a>
+    <hr />
+
+    <ul>
+      {% for watch in watches %}
+      <li>
+        <a href="{% url 'watch_detail' watch.id %}"><b>{{ watch.title }}</b></a>
+        — {{ watch.price }} $
+      </li>
+      {% empty %}
+      <p>Hozircha soatlar mavjud emas.</p>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

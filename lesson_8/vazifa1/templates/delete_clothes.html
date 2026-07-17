@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kiyimni O'chirish | Clothes Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Ogohlantirish kartasi */
+      .delete-card {
+        width: 100%;
+        max-width: 500px;
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        text-align: center;
+      }
+
+      /* Ogohlantirish ikonkasi doirasi */
+      .warning-icon {
+        width: 72px;
+        height: 72px;
+        background-color: #fef2f2;
+        border: 1px solid #fee2e2;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        margin: 0 auto 24px auto;
+        color: #dc2626;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 0 0 10px rgba(220, 38, 38, 0.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Sarlavha va matn */
+      .delete-card h1 {
+        font-size: 22px;
+        color: #0f172a;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .delete-card p {
+        color: #64748b;
+        font-size: 15px;
+        line-height: 1.5;
+        margin-bottom: 24px;
+      }
+
+      /* O'chirilayotgan kiyim nomi bloki */
+      .item-preview {
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 14px;
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 16px;
+        margin-bottom: 32px;
+      }
+
+      /* Tugmalar */
+      .btn-group {
+        display: flex;
+        gap: 12px;
+      }
+
+      .btn {
+        flex: 1;
+        padding: 14px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .btn-cancel {
+        background-color: #f1f5f9;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+      }
+
+      .btn-cancel:hover {
+        background-color: #e2e8f0;
+      }
+
+      .btn-delete {
+        background-color: #dc2626;
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+      }
+
+      .btn-delete:hover {
+        background-color: #b91c1c;
+        transform: translateY(-1px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="delete-card">
+      <!-- Ogohlantirish signali -->
+      <div class="warning-icon">⚠️</div>
+
+      <h1>Ishonchingiz komilmi?</h1>
+      <p>
+        Ushbu amalni ortga qaytarib bo'lmaydi. Quyidagi mahsulot tizimdan
+        butunlay o'chiriladi:
+      </p>
+
+      <!-- O'chirilayotgan element nomi -->
+      <div class="item-preview">👕 {{ object.name|default:"Loropiano" }}</div>
+
+      <!-- Django POST formasi -->
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="btn-group">
+          <!-- Bekor qilish: homega qaytaradi -->
+          <a href="{% url 'home' %}" class="btn btn-cancel">Yo'q, qolsin</a>
+
+          <!-- O'chirishni tasdiqlash tugmasi -->
+          <button type="submit" class="btn btn-delete">Ha, o'chirilsin</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

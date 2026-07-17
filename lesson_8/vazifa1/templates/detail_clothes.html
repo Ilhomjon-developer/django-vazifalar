@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiyim Tafsilotlari | Clothes Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1e2f 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Modern To'q rangli karta */
+        .detail-card {
+            width: 100%;
+            max-width: 550px;
+            background: #1e293b;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* Sarlavha qismi */
+        .detail-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 20px;
+        }
+
+        .detail-header h1 {
+            font-size: 28px;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .detail-header p {
+            color: #64748b;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Ma'lumotlar ro'yxati */
+        .info-list {
+            margin-bottom: 35px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        /* Narx uchun maxsus och ko'k modern rang */
+        .price-highlight {
+            color: #38bdf8;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* Boshqaruv tugmalari bloki */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Orqaga qaytish */
+        .btn-back {
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tahrirlash */
+        .btn-edit {
+            background: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-edit:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="detail-card">
+        <!-- Kiyim nomi (clothes o'zgaruvchisidan olinmoqda) -->
+        <div class="detail-header">
+            <h1>{{ clothes.name|default:"Loropiano" }}</h1>
+            <p>Product Details</p>
+        </div>
+
+        <!-- Element xususiyatlari -->
+        <div class="info-list">
+            <div class="info-item">
+                <span class="info-label">🆔 Product ID:</span>
+                <span class="info-value">#{{ clothes.id|default:"1" }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">💰 Price:</span>
+                <span class="info-value price-highlight">{{ clothes.price }} so'm</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">📏 Size:</span>
+                <span class="info-value">
+                    {% if clothes.size %}
+                        {{ clothes.size }}
+                    {% else %}
+                        <span style="color: #64748b; font-weight: 400;">Kiritilmagan</span>
+                    {% endif %}
+                </span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">🎨 Color:</span>
+                <span class="info-value">{{ clothes.color|default:"kulrang" }}</span>
+            </div>
+        </div>
+
+        <!-- Pastki amallar tugmasi -->
+        <div class="btn-group">
+            <a href="{% url 'home' %}" class="btn btn-back">⬅️ Bosh sahifaga qaytish</a>
+            <!-- Kalit so'z 'clothes.id' bilan yangilandi -->
+            <a href="{% url 'update' id=clothes.id %}" class="btn btn-edit">✏️ Kiyimlarni tahrirlash</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yangi Kiyim Qo'shish | Clothes Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Forma uchun markaziy oq karta */
+      .form-card {
+        width: 100%;
+        max-width: 600px;
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+      }
+
+      /* Sarlavha */
+      .form-header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .form-header h1 {
+        font-size: 26px;
+        color: #1e293b;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .form-header p {
+        color: #64748b;
+        font-size: 14px;
+        margin-top: 6px;
+      }
+
+      /* Forma guruhlari */
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 8px;
+      }
+
+      /* Input va Select elementlari */
+      .form-input,
+      .form-select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        font-size: 15px;
+        color: #1e293b;
+        background-color: #f8fafc;
+        transition: all 0.2s ease;
+      }
+
+      .form-input:focus,
+      .form-select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        background-color: #ffffff;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.11);
+      }
+
+      /* Tugmalar bloki */
+      .btn-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 32px;
+      }
+
+      .btn {
+        flex: 1;
+        padding: 14px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .btn-submit {
+        background-color: #10b981;
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+      }
+
+      .btn-submit:hover {
+        background-color: #059669;
+        transform: translateY(-1px);
+      }
+
+      .btn-cancel {
+        background-color: #f1f5f9;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+      }
+
+      .btn-cancel:hover {
+        background-color: #e2e8f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-card">
+      <div class="form-header">
+        <h1>➕ Add New Clothing</h1>
+        <p>Kolleksiyaga yangi kiyim ma'lumotlarini kiriting</p>
+      </div>
+
+      <!-- Django uchun POST forma -->
+      <form method="POST">
+        {% csrf_token %}
+
+        <!-- Kiyim nomi -->
+        <div class="form-group">
+          <label class="form-label" for="name">👕 Kiyim Nomi (Name)</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-input"
+            placeholder="Masalan: Loropiano Oversize"
+            required
+          />
+        </div>
+
+        <!-- Narxi -->
+        <div class="form-group">
+          <label class="form-label" for="price"
+            >💰 Narxi (Price - so'mda)</label
+          >
+          <input
+            type="number"
+            step="0.01"
+            id="price"
+            name="price"
+            class="form-input"
+            placeholder="Masalan: 120000"
+            required
+          />
+        </div>
+
+        <!-- O'lchami -->
+        <div class="form-group">
+          <label class="form-label" for="size">📏 O'lchami (Size)</label>
+          <select id="size" name="size" class="form-select">
+            <option value="" selected disabled>O'lchamni tanlang</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+          </select>
+        </div>
+
+        <!-- Rangi -->
+        <div class="form-group">
+          <label class="form-label" for="color">🎨 Rangi (Color)</label>
+          <input
+            type="text"
+            id="color"
+            name="color"
+            class="form-input"
+            placeholder="Masalan: kulrang, qora, oq"
+          />
+        </div>
+
+        <!-- Tugmalar -->
+        <div class="btn-group">
+          <!-- Bekor qilish bossa orqaga, homega qaytadi -->
+          <a href="{% url 'home' %}" class="btn btn-cancel">Cancel</a>
+          <button type="submit" class="btn btn-submit">Save Clothing</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

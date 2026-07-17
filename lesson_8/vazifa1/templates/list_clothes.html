@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clothes Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Umumiy reset va fon */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #0f172a 0%, #1e1e2f 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      /* Asosiy Katta Konteyner */
+      .main-container {
+        width: 100%;
+        max-width: 1100px;
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(12px);
+        border-radius: 28px;
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Sarlavha qismi */
+      .header-section {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .header-section h1 {
+        font-size: 32px;
+        color: #f8fafc;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        letter-spacing: -0.5px;
+      }
+
+      /* Kiyim Kartochkalari Grid tizimi */
+      .clothes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+        gap: 24px;
+      }
+
+      /* Modern Kiyim Kartochkasi */
+      .cloth-card {
+        background: #1e293b;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        border-radius: 20px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .cloth-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(99, 102, 241, 0.4);
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Ma'lumotlar qismi */
+      .card-body {
+        margin-bottom: 24px;
+      }
+
+      .cloth-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 16px;
+        letter-spacing: -0.3px;
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: #94a3b8;
+        margin-bottom: 12px;
+      }
+
+      .info-item span:first-child {
+        display: inline-flex;
+        align-items: center;
+        width: 20px;
+      }
+
+      .info-value {
+        font-weight: 600;
+        color: #cbd5e1;
+      }
+
+      .price-value {
+        color: #38bdf8; /* Narx ko'k-binafsha modern rangda */
+        font-weight: 700;
+      }
+
+      /* To'g'rilangan Pastki Tugmalar Bloki */
+      .card-actions {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        margin-top: auto; /* Kartochka ichida doim eng pastga yopishib turadi */
+      }
+
+      .btn {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+      }
+
+      /* View tugmasi - Modern Indigo */
+      .btn-view {
+        background: #4f46e5;
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+      }
+
+      .btn-view:hover {
+        background: #4338ca;
+        transform: translateY(-1px);
+      }
+
+      /* Delete tugmasi - To'q qizil neon effekt */
+      .btn-delete {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+
+      .btn-delete:hover {
+        background: #ef4444;
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        transform: translateY(-1px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- Sarlavha qoldi, home va add tugmalari olib tashlandi -->
+      <div class="header-section">
+        <h1>👕 Clothes Management</h1>
+      </div>
+
+      <!-- Kartochkalar ro'yxati -->
+      <div class="clothes-grid">
+        {% for item in clothes %}
+        <div class="cloth-card">
+          <div class="card-body">
+            <div class="cloth-title">{{ item.name|default:"Loropiano" }}</div>
+
+            <div class="info-item">
+              <span>💰</span> Price:
+              <span class="info-value price-value">{{ item.price }} so'm</span>
+            </div>
+
+            <div class="info-item">
+              <span>📏</span> Size:
+              <span class="info-value">
+                {% if item.size %}{{ item.size }}{% else %}<span
+                  style="color: #64748b; font-weight: 400"
+                  >Kiritilmagan</span
+                >{% endif %}
+              </span>
+            </div>
+
+            <div class="info-item">
+              <span>🎨</span> Color:
+              <span class="info-value">{{ item.color|default:"kulrang" }}</span>
+            </div>
+          </div>
+
+          <!-- Tugmalar bloki - joylashuvi mukammal qilindi -->
+          <div class="card-actions">
+            <a href="{% url 'detail' id=item.id %}" class="btn btn-view"
+              >View</a
+            >
+            <a href="{% url 'delete' id=item.id %}" class="btn btn-delete"
+              >Delete</a
+            >
+          </div>
+        </div>
+        {% empty %}
+        <div
+          style="
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+            font-size: 16px;
+          "
+        >
+          Hozircha kiyimlar kiritilmagan.
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

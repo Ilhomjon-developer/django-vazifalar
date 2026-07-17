@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clothes Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      /* Asosiy Katta Konteyner */
+      .main-card {
+        width: 100%;
+        max-width: 1000px;
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+        padding: 35px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+      }
+
+      /* Sarlavha qismi */
+      .title-section {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .title-section h1 {
+        font-size: 28px;
+        color: #1e293b;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      /* Yuqori Navigatsiya Tugmalari */
+      .nav-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 35px;
+      }
+
+      .btn-nav {
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s ease;
+      }
+
+      .btn-home {
+        background-color: #3b82f6;
+        color: white;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+      }
+
+      .btn-home:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+      }
+
+      .btn-add {
+        background-color: #10b981;
+        color: white;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+      }
+
+      .btn-add:hover {
+        background-color: #059669;
+        transform: translateY(-1px);
+      }
+
+      /* Kiyim Kartochkalari Seti (Grid) */
+      .clothes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+      }
+
+      /* Alohida Kiyim Kartochkasi */
+      .cloth-item {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s ease;
+      }
+
+      .cloth-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.04);
+        border-color: #cbd5e1;
+      }
+
+      /* Ma'lumotlar qismi */
+      .cloth-info {
+        margin-bottom: 20px;
+      }
+
+      .cloth-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 14px;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 6px;
+      }
+
+      .info-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #475569;
+        margin-bottom: 8px;
+      }
+
+      .info-value {
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      /* Pastki Amallar Tugmalari bloki */
+      .action-block {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .btn-action {
+        flex: 1;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+      }
+
+      .btn-view {
+        background-color: #eff6ff;
+        color: #2563eb;
+        border: 1px solid #bfdbfe;
+      }
+      .btn-view:hover {
+        background-color: #dbeafe;
+      }
+
+      .btn-delete {
+        background-color: #fef2f2;
+        color: #dc2626;
+        border: 1px solid #fecaca;
+      }
+      .btn-delete:hover {
+        background-color: #fee2e2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-card">
+      <!-- Sarlavha -->
+      <div class="title-section">
+        <h1>👕 Clothes Management</h1>
+      </div>
+
+      <!-- Navigatsiya -->
+      <div class="nav-buttons">
+        <a href="{% url 'home' %}" class="btn-nav btn-home">🏠 Home</a>
+        <a href="{% url 'create' %}" class="btn-nav btn-add">➕ Add Clothing</a>
+      </div>
+
+      <!-- Kartochkalar Grid (Sikl) -->
+      <div class="clothes-grid">
+        {% for item in clothes %}
+        <div class="cloth-item">
+          <div class="cloth-info">
+            <div class="cloth-title">{{ item.name|default:"Loropiano" }}</div>
+
+            <div class="info-row">
+              <span>💰 Price:</span>
+              <span class="info-value">{{ item.price }} so'm</span>
+            </div>
+
+            <div class="info-row">
+              <span>📏 Size:</span>
+              <span class="info-value"
+                >{% if item.size %}{{ item.size }}{% else %}<span
+                  style="color: #94a3b8; font-weight: 400"
+                  >Kiritilmagan</span
+                >{% endif %}</span
+              >
+            </div>
+
+            <div class="info-row">
+              <span>🎨 Color:</span>
+              <span class="info-value">{{ item.color|default:"kulrang" }}</span>
+            </div>
+          </div>
+
+          <!-- Tugmalar endi hech qachon chiqib ketmaydi -->
+          <div class="action-block">
+            <a href="{% url 'detail' id=item.id %}" class="btn-action btn-view"
+              >View</a
+            >
+            <a
+              href="{% url 'delete' id=item.id %}"
+              class="btn-action btn-delete"
+              >🗑️ Delete</a
+            >
+          </div>
+        </div>
+        {% empty %}
+        <div
+          style="
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+          "
+        >
+          Hozircha kiyimlar ro'yxati bo'sh.
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

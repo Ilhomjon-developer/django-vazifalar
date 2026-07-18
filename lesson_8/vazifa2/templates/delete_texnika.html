@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Texnikani O'chirish</title>
+  </head>
+  <body>
+    <h1>Texnikani o'chirishni tasdiqlash</h1>
+    <hr />
+    <p>
+      Haqiqatan ham <strong>{{ object.name }}</strong> texnikasini bazadan
+      o'chirib tashlamoqchimisiz?
+    </p>
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" style="color: red">Ha, o'chirilsin</button>
+    </form>
+    <br />
+    <a href="{% url 'list' %}">Yo'q, orqaga qaytish</a>
+  </body>
+</html>

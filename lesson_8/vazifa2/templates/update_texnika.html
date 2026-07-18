@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Texnikani Tahrirlash</title>
+  </head>
+  <body>
+    <h1>Texnika ma'lumotlarini tahrirlash</h1>
+    <hr />
+    <form method="POST">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">O'zgarishlarni saqlash</button>
+    </form>
+    <br />
+    <a href="{% url 'list' %}">Bekor qilish</a>
+  </body>
+</html>

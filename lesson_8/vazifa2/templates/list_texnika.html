@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Texnikalar Ro'yxati</title>
+  </head>
+  <body>
+    <h1>Mavjud texnikalar ro'yxati</h1>
+    <hr />
+
+    <!-- Yangi texnika qo'shish sahifasiga havola -->
+    <a href="{% url 'create' %}">➕ Yangi texnika qo'shish</a>
+    <br /><br />
+
+    <ul>
+      {% for t in texnika %}
+      <li>
+        <strong>{{ t.name }}</strong> - {{ t.price }} so'm
+        <!-- Har bir obyektning ID raqami orqali detail sahifasiga o'tish -->
+        | <a href="{% url 'detail' t.id %}">🔎 Batafsil ko'rish</a>
+      </li>
+      {% empty %}
+      <li>Hozircha bazada hech qanday texnika yo'q.</li>
+      {% endfor %}
+    </ul>
+
+    <br />
+    <a href="{% url 'home' %}">Asosiy sahifaga qaytish</a>
+  </body>
+</html>

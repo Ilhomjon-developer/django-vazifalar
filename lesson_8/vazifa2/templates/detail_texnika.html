@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ texnika.name }} - Batafsil</title>
+  </head>
+  <body>
+    <h1>{{ texnika.name }}</h1>
+    <hr />
+
+    <p><strong>Narxi:</strong> {{ texnika.price }} so'm</p>
+
+    <p>
+      <strong>Tavsif:</strong>
+      {% if texnika.desc %} {{ texnika.desc }} {% else %} Tavsif kiritilmagan.
+      {% endif %}
+    </p>
+
+    <!-- get_FIELD_display() metodi choices matnini chiroyli ko'rsatadi -->
+    <p><strong>Holati:</strong> {{ texnika.get_condition_display }}</p>
+    <p>
+      <strong>Energiya samaradorligi:</strong> {{
+      texnika.get_energy_class_display }}
+    </p>
+
+    <hr />
+    <!-- Tahrirlash va O'chirish URL marshrutlariga ID (pk) yuborish -->
+    <a href="{% url 'update' texnika.id %}">✏️ Tahrirlash</a> |
+    <a href="{% url 'delete' texnika.id %}" style="color: red">🗑️ O'chirish</a>
+
+    <br /><br />
+    <a href="{% url 'list' %}">🔙 Ro'yxatga qaytish</a>
+  </body>
+</html>

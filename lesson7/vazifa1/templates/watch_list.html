@@ -5,19 +5,34 @@
     <title>Soatlar Ro'yxati</title>
   </head>
   <body>
-    <h1>⌚️ Premium Soatlar Do'koni</h1>
-    <a href="{% url 'watch_create' %}">➕ Yangi soat qo'shish</a>
+    <h1>⌚️ Soatlar Do'koni</h1>
+    <p><a href="{% url 'watch_create' %}">➕ Yangi soat qo'shish</a></p>
     <hr />
 
-    <ul>
+    {% if watches %}
+    <div style="display: grid; gap: 16px; max-width: 900px">
       {% for watch in watches %}
-      <li>
-        <a href="{% url 'watch_detail' watch.id %}"><b>{{ watch.title }}</b></a>
-        — {{ watch.price }} $
-      </li>
-      {% empty %}
-      <p>Hozircha soatlar mavjud emas.</p>
+      <div
+        style="
+          padding: 18px;
+          border: 1px solid #ddd;
+          border-radius: 10px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        "
+      >
+        <h2 style="margin: 0 0 8px">
+          <a href="{% url 'watch_detail' watch.id %}">{{ watch.title }}</a>
+        </h2>
+        <p style="margin: 2px 0"><strong>Brend:</strong> {{ watch.brand }}</p>
+        <p style="margin: 2px 0"><strong>Narxi:</strong> {{ watch.price }} $</p>
+        <p style="margin: 2px 0">
+          <strong>Tavsif:</strong> {{ watch.description|truncatewords:10 }}
+        </p>
+      </div>
       {% endfor %}
-    </ul>
+    </div>
+    {% else %}
+    <p>Hozircha soat mavjud emas.</p>
+    {% endif %}
   </body>
 </html>

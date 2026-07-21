@@ -6,6 +6,7 @@
   </head>
   <body>
     <h1>{{ title }}</h1>
+    <p><a href="{% url 'watch_list' %}">⬅️ Barcha soatlar</a></p>
     <hr />
     <form method="POST">
       {% csrf_token %} {% if form.errors %}
@@ -16,7 +17,8 @@
       <table>
         {{ form.as_table }}
       </table>
-      <br /><button type="submit">Saqlash</button>
+      <br />
+      <button type="submit">Saqlash</button>
     </form>
   </body>
 </html>

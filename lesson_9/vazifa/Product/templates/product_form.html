@@ -1,0 +1,9 @@
+<h2>Mahsulot ma'lumotlari</h2>
+
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Saqlash</button>
+</form>
+
+<a href="{% url 'product_list' %}">Bekor qilish</a>

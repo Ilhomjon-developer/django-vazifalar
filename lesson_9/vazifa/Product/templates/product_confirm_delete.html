@@ -1,0 +1,10 @@
+<h2>Mahsulotni o'chirish</h2>
+
+<p>Haqiqatdan ham "<strong>{{ object.name }}</strong>" mahsulotini o'chirmoqchimisiz?</p>
+
+<form method="post" action="">
+    {% csrf_token %}
+    <button type="submit">Ha, o'chirilsin</button>
+</form>
+
+<a href="{% url 'product_list' %}">Yo'q, orqaga qaytish</a>

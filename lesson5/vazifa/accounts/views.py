@@ -70,4 +70,38 @@ class LogOutView(View):
     def get(self,request):
         logout(request.user)
         return redirect('auth:login')
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     

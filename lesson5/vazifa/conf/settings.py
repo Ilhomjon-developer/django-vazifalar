@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'accounts',
     'products',
     'comments',
-    'baseapp'
+    'baseapp',
+    'order'
 ]
 
 MIDDLEWARE = [
@@ -76,23 +77,23 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shop',
-        'USER': 'postgres',
-        'PASSWORD': '7879',
-        'HOST': 'localhost',  # Or your remote database IP
-        'PORT': '5432',       # Default PostgreSQL port
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'shop',
+#         'USER': 'postgres',
+#         'PASSWORD': '7879',
+#         'HOST': 'localhost',  # Or your remote database IP
+#         'PORT': '5432',       # Default PostgreSQL port
+#     }
+# }
 
 
 # Password validation

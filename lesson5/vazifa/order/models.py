@@ -2,49 +2,45 @@ from django.db import models
 from baseapp.models import BaseModel
 from accounts.models import CustomUser
 from products.models import Product
-# Create your models here.
 
 class Card(BaseModel):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='card')
 
     def __str__(self):
-        return self.user
+        return f"{self.user.username} - Savatchasi"
 
 
 class CardItem(BaseModel):
-    card = models.ForeignKey(Card,on_delete=models.CASCADE,related_name='items')
-    product = models.ForeignKey(Product,on_delete=models.SET_NULL, null=True)
-    count = models.PositiveIntegerField()
+    card = models.ForeignKey(Card, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    count = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return self.card
+        return f"{self.card.user.username} -> {self.product}"
 
 
 class Order(BaseModel):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orders')
     adress = models.CharField(max_length=120)
-    total_price = models.DecimalField(max_digits=10,decimal_places=2)
-
-
 
     @property
     def total_price(self):
-        return sum(order_item.price for order_item in self.items)
-
+        return sum(item.price for item in self.items.all())
 
     def __str__(self):
-        return self.user
+        return f"Order #{self.id} - {self.user.username}"
 
 
 class OrderItem(BaseModel):
-    order = models.ForeignKey(Card,on_delete=models.CASCADE,related_name='items')
-    product = models.ForeignKey(Product,on_delete=models.SET_NULL, null=True,related_name='product_order')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='product_orders')
     count = models.PositiveIntegerField(default=1)
-    price = models.DecimalField(max_digits=10,decimal_places=2)
 
     @property
     def price(self):
-        return self.count * self.product.price
+        if self.product:
+            return self.count * self.product.price
+        return 0
 
     def __str__(self):
-        return self.order
+        return f"{self.order.id} -> {self.product}"

@@ -3,10 +3,10 @@ from baseapp.models import BaseModel
 from accounts.models import CustomUser
 # Create your models here.
 
-class Categoriy(BaseModel):
+class Category(BaseModel):
     title = models.CharField(max_length=123)
     desc = models.CharField(max_length=123)
-    parent = models.ForeignKey('self',on_delete=models.CASCADE, blank=True,null=True)
+    parent = models.ForeignKey('self',on_delete=models.CASCADE, blank=True,null=True, related_name='children')
     image = models.ImageField(upload_to='catigories/')
 
 
@@ -43,10 +43,23 @@ class Product(BaseModel):
     quantity = models.PositiveIntegerField()
     discount = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=10,decimal_places=2)
-    category = models.ForeignKey(Categoriy,on_delete=models.CASCADE,related_name='products')
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name='products')
 
 
     def __str__(self):
         return self.title
 
-    
+class Banner(BaseModel):
+    title = models.CharField(max_length=120)
+    subtitle = models.CharField(max_length=255,blank=True)
+    image = models.ImageField(upload_to='banners/')
+    button_text = models.CharField(max_length=50,default='Shop Now')
+    category = models.ForeignKey(Category,null=True,blank=True,on_delete=models.SET_NULL)
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
